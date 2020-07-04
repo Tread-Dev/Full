@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 import Home from "./../Home";
 import App from "./../../App";
+import TableExampleStriped from "./../exerciselibrarytable";
 // ----------- Pages Imports ---------------
 import Analytics from "./Dashboards/Analytics";
 import ProjectsDashboard from "./Dashboards/Projects";
@@ -60,7 +61,7 @@ import Dropzone from "./Forms/Dropzone";
 import Sliders from "./Forms/Sliders";
 
 import Tables from "./Tables/Tables";
-import ExtendedTable from "./Tables/ExtendedTable";
+import AdvancedTableB from "./Tables/ExtendedTable/components/AdvancedTableB";
 import AgGrid from "./Tables/AgGrid";
 
 import AccountEdit from "./Apps/AccountEdit";
@@ -83,7 +84,7 @@ import SettingsEdit from "./Apps/SettingsEdit";
 import Tasks from "./Apps/Tasks";
 import TasksDetails from "./Apps/TasksDetails";
 import TasksKanban from "./Apps/TasksKanban";
-import Users from "./Apps/Users";
+import Users from "./Apps/Users/UsersList";
 import UsersResults from "./Apps/UsersResults";
 import VideosResults from "./Apps/VideosResults";
 
@@ -97,7 +98,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Success from "./Pages/Success";
 import Timeline from "./Pages/Timeline";
-import Navbar from "./../../Navbar"
+import Navbar from "./../../Navbar";
 import Icons from "./Icons";
 
 // ----------- Layout Imports ---------------
@@ -114,11 +115,11 @@ export const RoutedContent = () => {
     <Switch>
       <Redirect from="/" to="/trainer/home" exact />
       <Route path="/trainer/home" exact component={Home} />
-      <Route path="/trainer/auth/login" component={Login} exact/>
+      <Route path="/trainer/auth/login" component={Login} exact />
       <Route path="/trainer/auth/register" component={Register} exact />
-      <Route component={ App } path="/trainer/workoutbuilder" exact/>   
-      <Route component={ AccountEdit } path="/trainer/workoutlibrary"/>
-    {/* <Route component={ AccountEdit } path="/trainer/account-edit"/> */}
+      <Route component={App} path="/trainer/workoutbuilder" exact />
+      <Route component={AdvancedTableB } path="/trainer/exerciselibrary" />
+      {/* <Route component={ AccountEdit } path="/trainer/account-edit"/> */}
       {/* <Redirect from="/" to="/dashboards/projects" exact />
        */}
       {/* <Route path="/dashboards/analytics" exact component={Analytics} />
@@ -243,11 +244,15 @@ export const RoutedNavbars = () => (
       component={SidebarWithNavbar.Navbar}
       path="/trainer/workoutbuilder"
     />
-       <Route
+    <Route
       component={SidebarWithNavbar.Navbar}
       path="/trainer/auth/dashboard"
     />
-     {/* <Route
+    <Route
+      component={SidebarWithNavbar.Navbar}
+      path="/trainer/exerciselibrary"
+    />
+    {/* <Route
         component={SidebarWithNavbar.Navbar}
         path="/trainer/chat"
         
@@ -257,7 +262,7 @@ export const RoutedNavbars = () => (
         path="/trainer/account-edit"
         
       /> */}
-    
+
     {/* Other Navbars: */}
     {/* <Route component={SidebarANavbar} path="/layouts/sidebar-a" />
     <Route component={NavbarOnly.Navbar} path="/layouts/navbar" />
@@ -266,7 +271,7 @@ export const RoutedNavbars = () => (
       path="/trainer/auth/dashboard"
     /> */}
     {/* Default Navbar: */}
-     {/* <Route
+    {/* <Route
             component={ DefaultNavbar }
             path="/trainer/auth/dashboard"
         />  */}
@@ -275,17 +280,19 @@ export const RoutedNavbars = () => (
 
 export const RoutedSidebars = () => (
   <Switch>
-       <Route
-        component={SidebarWithNavbar.Sidebar}
-        path="/trainer/workoutbuilder"
-        
-      />
-      <Route
-        component={SidebarWithNavbar.Sidebar}
-        path="/trainer/auth/dashboard"
-        
-      />
-       {/* <Route
+    <Route
+      component={SidebarWithNavbar.Sidebar}
+      path="/trainer/exerciselibrary"
+    />
+    <Route
+      component={SidebarWithNavbar.Sidebar}
+      path="/trainer/workoutbuilder"
+    />
+    <Route
+      component={SidebarWithNavbar.Sidebar}
+      path="/trainer/auth/dashboard"
+    />
+    {/* <Route
         component={SidebarWithNavbar.Sidebar}
         path="/trainer/chat"
         
@@ -295,7 +302,7 @@ export const RoutedSidebars = () => (
         path="/trainer/account-edit"
         
       /> */}
-      
+
     {/* Other Sidebars: */}
     {/* <Route component={SidebarASidebar} path="/layouts/sidebar-a" />
     <Route

@@ -21,14 +21,14 @@ const UsersList = () => (
                 <Table className="mb-0" hover>
                     <thead>
                         <tr>
-                            <th className="align-middle bt-0"></th>
-                            <th className="align-middle bt-0"></th>
-                            <th className="align-middle bt-0">Name</th>
-                            <th className="align-middle bt-0">Email</th>
-                            <th className="align-middle bt-0">Phone</th>
+                            {/* <th className="align-middle bt-0"></th>
+                            <th className="align-middle bt-0"></th> */}
+                            <th className="align-middle bt-0">Exercise Name</th>
+                            <th className="align-middle bt-0">Created By</th>
+                            {/* <th className="align-middle bt-0">Phone</th>
                             <th className="align-middle bt-0 text-right">
                                 Actions
-                            </th>
+                            </th> */}
                         </tr>
                     </thead>
                     <tbody>

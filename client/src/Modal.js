@@ -163,6 +163,11 @@ const Modalcall = (props) => {
             setResponse(res.data.msg);
             setemailcontent("Workout Mail has been sent!");
             setLoadingbutton(false);
+            console.log(items);
+            console.log(mail);
+            console.log(timerName);
+            console.log(videoId);
+            console.log(timerDescription);
           })
           .catch((err) => {
             setResponse(err.response.data.msg);
@@ -444,6 +449,10 @@ const Modalcall = (props) => {
             setResponse(res.data.msg);
             // setemailcontent("Workout Mail has been sent!");
              setLoadingbutton(false);
+            console.log(items);
+            console.log(timerName);
+            console.log(videoId);
+            console.log(timerDescription);
              history.push({ pathname: "/trainer/workoutlibrary" });
           })
           .catch((err) => {

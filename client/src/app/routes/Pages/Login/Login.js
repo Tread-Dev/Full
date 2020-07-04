@@ -41,7 +41,7 @@ const Login = () => {
         setEmail("");
         setPassword("");
         history.push({ pathname: "/trainer/auth/dashboard" });
-
+        console.log(email+"  "+password);
         // window.location = "/retrieve" //This line of code will redirect you once the submission is succeed
       })
       .catch((err) => {

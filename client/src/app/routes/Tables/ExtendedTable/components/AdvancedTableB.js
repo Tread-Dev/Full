@@ -1,10 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import moment from 'moment';
 import _ from 'lodash';
 import faker from 'faker/locale/en_US';
-
+import ModalCall from './../../../../../ModalCall';
 import {
     Avatar,
     Badge,
@@ -16,10 +16,14 @@ import {
 import { CustomExportCSV } from './CustomExportButton';
 import { CustomSearch } from './CustomSearch';
 import { randomArray, randomAvatar } from './../../../../utilities';
+import {exercise} from './../../../../../Data'
+
 
 const generateRow = (id) => ({
+   
     id,
     photo: randomAvatar(),
+    ExerciseName:exercise[id].key,
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     role: faker.name.jobType(),
@@ -51,13 +55,22 @@ const sortCaret = (order) => {
 };
 
 export class AdvancedTableB extends React.Component {
+    
+    
     constructor(props) {
         super(props);
 
         this.state = {
-            users: _.times(10, generateRow)
+            users: _.times(10, generateRow),
+            IsCall:false
         }
+        this.handleClick = this.handleClick.bind(this);
     }
+    handleClick() {
+        this.setState(e => ({
+          IsCall:true
+        }));
+      }
 
     handleAddRow() {
         const usersLength = this.state.users.length;
@@ -71,77 +84,82 @@ export class AdvancedTableB extends React.Component {
     }
 
     createColumnDefinitions() {
+        
         return [
+             {
+                dataField: 'ExerciseName',
+                text: 'Exercise Name',
+                sort: true,
+                sortCaret
+            },
             {
                 dataField: 'photo',
-                text: 'Photo',
+                text: 'Created By',
                 formatter: (cell) => (
                     <Avatar.Image src={ cell } />
                 )
-            }, {
-                dataField: 'firstName',
-                text: 'First Name',
-                sort: true,
-                sortCaret
-            }, {
-                dataField: 'lastName',
-                text: 'Last Name',
-                sort: true,
-                sortCaret
-            }, {
-                dataField: 'role',
-                text: 'Role',
-                sort: true,
-                sortCaret
-            }, {
-                dataField: 'status',
-                text: 'Status',
-                sort: true,
-                sortCaret,
-                formatter: (cell) => {
-                    const color = (status) => {
-                        const map = {
-                            'Active': 'success',
-                            'Suspended': 'danger',
-                            'Waiting': 'info',
-                            'Unknown': 'secondary'
-                        };
-                        return map[status];
-                    }
+            },
+            // }, {
+            //     dataField: 'lastName',
+            //     text: 'Last Name',
+            //     sort: true,
+            //     sortCaret
+            // }, {
+            //     dataField: 'role',
+            //     text: 'Role',
+            //     sort: true,
+            //     sortCaret
+            // }, {
+            //     dataField: 'status',
+            //     text: 'Status',
+            //     sort: true,
+            //     sortCaret,
+            //     formatter: (cell) => {
+            //         const color = (status) => {
+            //             const map = {
+            //                 'Active': 'success',
+            //                 'Suspended': 'danger',
+            //                 'Waiting': 'info',
+            //                 'Unknown': 'secondary'
+            //             };
+            //             return map[status];
+            //         }
 
-                    return (
-                        <Badge color={ color(cell) }>
-                            { cell }
-                        </Badge>
-                    );
-                }
-            }, {
-                dataField: 'region',
-                text: 'Region',
-                sort: true,
-                sortCaret
-            }, {
-                dataField: 'earnings',
-                text: 'Earnings',
-                sort: true,
-                sortCaret,
-                formatter: (cell, row) => (
-                    <span>
-                        { row.earningsCurrencyIcon }
-                        { _.isNumber(cell) && cell.toFixed(2) }
-                    </span>
-                )
-            }
+            //         return (
+            //             <Badge color={ color(cell) }>
+            //                 { cell }
+            //             </Badge>
+            //         );
+            //     }
+            // }, {
+            //     dataField: 'region',
+            //     text: 'Region',
+            //     sort: true,
+            //     sortCaret
+            // }, {
+            //     dataField: 'earnings',
+            //     text: 'Earnings',
+            //     sort: true,
+            //     sortCaret,
+            //     formatter: (cell, row) => (
+            //         <span>
+            //             { row.earningsCurrencyIcon }
+            //             { _.isNumber(cell) && cell.toFixed(2) }
+            //         </span>
+            //     )
+            // }
         ]; 
     }
+    
 
     render() {
+
         const columnDefs = this.createColumnDefinitions();
 
         const expandRow = {
             renderer: row => (
                 <Row>
-                    <Col md={ 6 }>
+                    {/* <Col md={ 6 }>
                         <dl className="row">
                             <dt className="col-sm-6 text-right">Last Login</dt>
                             <dd className="col-sm-6">{ moment(row.lastLoginDate).format('DD-MMM-YYYY') }</dd>
@@ -152,8 +170,8 @@ export class AdvancedTableB extends React.Component {
                             <dt className="col-sm-6 text-right">Browser</dt>
                             <dd className="col-sm-6">{ row.browser }</dd>
                         </dl>
-                    </Col>
-                    <Col md={ 6 }>
+                    </Col> */}
+                    {/* <Col md={ 6 }>
                         <dl className="row">
                             <dt className="col-sm-6 text-right">Operating System</dt>
                             <dd className="col-sm-6">{ row.os }</dd>
@@ -164,23 +182,23 @@ export class AdvancedTableB extends React.Component {
                             <dt className="col-sm-6 text-right">Plan Expiriation</dt>
                             <dd className="col-sm-6">{ moment(row.planEnd).format('DD-MMM-YYYY') }</dd>
                         </dl>
-                    </Col>
+                    </Col> */}
                 </Row>
             ),
-            showExpandColumn: true,
-            expandHeaderColumnRenderer: ({ isAnyExpands }) => isAnyExpands ? (
-                    <i className="fa fa-angle-down fa-fw fa-lg text-muted"></i>
-                ) : (
-                    <i className="fa fa-angle-right fa-fw fa-lg text-muted"></i>
-                ),
-            expandColumnRenderer: ({ expanded }) =>
-                expanded ? (
-                    <i className="fa fa-angle-down fa-fw fa-lg text-muted"></i>
-                ) : (
-                    <i className="fa fa-angle-right fa-fw fa-lg text-muted"></i>
-                )
+            // showExpandColumn: true,
+            // expandHeaderColumnRenderer: ({ isAnyExpands }) => isAnyExpands ? (
+            //         <i className="fa fa-angle-down fa-fw fa-lg text-muted"></i>
+            //     ) : (
+            //         <i className="fa fa-angle-right fa-fw fa-lg text-muted"></i>
+            //     ),
+            // expandColumnRenderer: ({ expanded }) =>
+            //     expanded ? (
+            //         <i className="fa fa-angle-down fa-fw fa-lg text-muted"></i>
+            //     ) : (
+            //         <i className="fa fa-angle-right fa-fw fa-lg text-muted"></i>
+            //     )
         }
-
+        
         return (
             <ToolkitProvider
                 keyField="id"
@@ -193,24 +211,27 @@ export class AdvancedTableB extends React.Component {
                 props => (
                     <React.Fragment>
                         <div className="d-flex justify-content-end align-items-center mb-2">
-                            <h6 className="my-0">
+                            {/* <h6 className="my-0">
                                 AdvancedTable B
-                            </h6>
-                            <div className="d-flex ml-auto">
+                            </h6> */}
+                            <div className="d-flex ml-auto" style={{textAlign:"center"}}>
                                 <CustomSearch
                                     className="mr-2"
+                                    
                                     { ...props.searchProps }
+                                    
                                 />
                                 <ButtonGroup>
-                                    <CustomExportCSV
+                                    {/* <CustomExportCSV
                                         { ...props.csvProps }
                                     >
                                         Export
-                                    </CustomExportCSV>
+                                    </CustomExportCSV> */}
                                     <Button
                                         size="sm"
                                         outline
-                                        onClick={ this.handleAddRow.bind(this) }
+                                        onClick={this.handleClick}
+                                        
                                     >
                                         Add <i className="fa fa-fw fa-plus"></i>
                                     </Button>
@@ -220,11 +241,13 @@ export class AdvancedTableB extends React.Component {
                         <BootstrapTable
                             classes="table-responsive-lg"
                             bordered={ false }
-                            expandRow={ expandRow }
+                            expandRow={ false }
                             responsive
                             hover
                             { ...props.baseProps }
                         />
+
+                        {this.state.IsCall&&<ModalCall IsOpen={true}/>}
                     </React.Fragment>
                 )
             }
@@ -232,3 +255,4 @@ export class AdvancedTableB extends React.Component {
         );
     }
 }
+export default AdvancedTableB;
