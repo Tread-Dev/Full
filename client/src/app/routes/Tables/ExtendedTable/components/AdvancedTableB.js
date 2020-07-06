@@ -63,13 +63,17 @@ export class AdvancedTableB extends React.Component {
         this.state = {
             users: _.times(10, generateRow),
             IsCall:false
+           
         }
         this.handleClick = this.handleClick.bind(this);
+        
     }
+    
     handleClick() {
         this.setState(e => ({
           IsCall:true
         }));
+        
       }
 
     handleAddRow() {
@@ -238,16 +242,20 @@ export class AdvancedTableB extends React.Component {
                                 </ButtonGroup>
                             </div>
                         </div>
+                        
+                        
                         <BootstrapTable
                             classes="table-responsive-lg"
-                            bordered={ false }
+                            
                             expandRow={ false }
+                            striped
                             responsive
                             hover
                             { ...props.baseProps }
                         />
 
                         {this.state.IsCall&&<ModalCall IsOpen={true}/>}
+                        
                     </React.Fragment>
                 )
             }

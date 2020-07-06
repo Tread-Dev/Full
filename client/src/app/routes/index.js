@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 import Home from "./../Home";
 import App from "./../../App";
-import TableExampleStriped from "./../exerciselibrarytable";
+import ViewCard from "./../../ViewCard";
 // ----------- Pages Imports ---------------
 import Analytics from "./Dashboards/Analytics";
 import ProjectsDashboard from "./Dashboards/Projects";
@@ -119,6 +119,7 @@ export const RoutedContent = () => {
       <Route path="/trainer/auth/register" component={Register} exact />
       <Route component={App} path="/trainer/workoutbuilder" exact />
       <Route component={AdvancedTableB } path="/trainer/exerciselibrary" />
+      <Route component={ViewCard} path="/trainer/workoutlibrary" />
       {/* <Route component={ AccountEdit } path="/trainer/account-edit"/> */}
       {/* <Redirect from="/" to="/dashboards/projects" exact />
        */}
@@ -252,6 +253,9 @@ export const RoutedNavbars = () => (
       component={SidebarWithNavbar.Navbar}
       path="/trainer/exerciselibrary"
     />
+    <Route
+    component={SidebarWithNavbar.Navbar}
+    path="/trainer/workoutlibrary"/>
     {/* <Route
         component={SidebarWithNavbar.Navbar}
         path="/trainer/chat"
@@ -292,6 +296,9 @@ export const RoutedSidebars = () => (
       component={SidebarWithNavbar.Sidebar}
       path="/trainer/auth/dashboard"
     />
+    <Route
+    component={SidebarWithNavbar.Sidebar}
+    path="/trainer/workoutlibrary"/>
     {/* <Route
         component={SidebarWithNavbar.Sidebar}
         path="/trainer/chat"

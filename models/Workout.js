@@ -23,8 +23,10 @@ const WorkoutSchema = {
       upnext: { type: String, default: 1 },
     },
   ],
-  trainerEmail:{
-    type: String,
+  trainer: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Trainer',
+    required: true,
   },
   mail: {
     type: String,
